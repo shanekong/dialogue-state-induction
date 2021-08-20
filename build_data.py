@@ -24,7 +24,7 @@ def main(args):
         dialog_paths = [Path(cfg.input_data_dir) / dataset_split /
                         f"dialogues_{i:03d}.json" \
                         for i in dataset_config.file_ranges[dataset_split]]
-        print(f"Annotating {dataset_split} set....")
+        print("Annotating {dataset_split} set....")
         annotator.process(dialog_paths)
 
     # Extract feature using elmo.
@@ -33,7 +33,7 @@ def main(args):
         dialog_paths = [Path(cfg.input_data_dir) / dataset_split /
                         f"dialogues_{i:03d}.annotation" \
                         for i in dataset_config.file_ranges[dataset_split]]
-        print(f"Extracting feature in {dataset_split} set....")
+        print("Extracting feature in {dataset_split} set....")
         extractor.process(dialog_paths)
 
     # Build a vocabulary for candidates.

@@ -20,7 +20,8 @@ from __future__ import division
 from __future__ import print_function
 
 import json
-import tensorflow.compat.v1 as tf
+# import tensorflow.compat.v1 as tf
+# import tensorflow as tf
 
 
 class ServiceSchema(object):
@@ -126,7 +127,8 @@ class Schema(object):
 
   def __init__(self, schema_json_path):
     # Load the schema from the json file.
-    with tf.io.gfile.GFile(schema_json_path) as f:
+    # with tf.io.gfile.GFile(schema_json_path) as f:
+    with open(schema_json_path, 'r', encoding='utf-8') as f:
       schemas = json.load(f)
     self._services = sorted(schema["service_name"] for schema in schemas)
     self._services_vocab = {v: k for k, v in enumerate(self._services)}
@@ -152,5 +154,6 @@ class Schema(object):
     return self._services
 
   def save_to_file(self, file_path):
-    with tf.io.gfile.GFile(file_path, "w") as f:
+    # with tf.io.gfile.GFile(file_path, "w") as f:
+    with open(file_path, 'w', encoding='utf-8') as f:
       json.dump(self._schemas, f, indent=2)

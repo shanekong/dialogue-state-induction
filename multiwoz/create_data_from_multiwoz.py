@@ -272,7 +272,8 @@ class Processor(object):
 
     # Dict used to correct categorical slot values annotated in MultiWOZ 2.1.
     self._slot_value_correction_for_cat_slots = {}
-    with tf.io.gfile.GFile(_CORRECT_FOR_STATE_PATH, 'r') as f:
+    with open(_CORRECT_FOR_STATE_PATH, 'r', encoding='utf-8') as f:
+    # with tf.io.gfile.GFile(_CORRECT_FOR_STATE_PATH, 'r') as f:
       for line in f:
         tok_from, tok_to = line.replace('\n', '').split('\t')
         self._slot_value_correction_for_cat_slots[tok_from] = tok_to
@@ -783,7 +784,8 @@ def main(_):
   schemas = schema.Schema(schema_path)
   processor = Processor(schemas)
   data_path = os.path.join(FLAGS.input_data_dir, 'data.json')
-  with tf.io.gfile.GFile(data_path, 'r') as f:
+  # with tf.io.gfile.GFile(data_path, 'r') as f:
+  with open(data_path, 'r', encoding='utf-8') as f:
     data = json.load(f)
   dev_test_ids = []
   output_dir = FLAGS.output_dir or _DIR_PATH
@@ -791,14 +793,15 @@ def main(_):
   # included in the dev and test id list files belong to the training set.
   for output_dir_name, file_name in _PATH_MAPPING:
     output_sub_dir = os.path.join(output_dir, output_dir_name)
-    if not tf.io.gfile.exists(output_sub_dir):
-      tf.io.gfile.makedirs(output_sub_dir)
+    if not os.path.exists(output_sub_dir):
+      os.makedirs(output_sub_dir)
     schema_path = os.path.join(output_sub_dir, 'schema.json')
     schemas.save_to_file(schema_path)
     dial_ids = []
     if file_name:
       id_list_path = os.path.join(FLAGS.input_data_dir, file_name)
-      with tf.io.gfile.GFile(id_list_path) as f:
+      with open(id_list_path, 'r', encoding='utf-8') as f:
+      # with tf.io.gfile.GFile(id_list_path) as f:
         dial_ids = [id_name.strip() for id_name in f.readlines()]
       dev_test_ids.extend(dial_ids)
     else:
@@ -817,7 +820,8 @@ def main(_):
       dialogs_list = converted_dials[(file_index - 1) *
                                      _NUM_DIALS_PER_FILE:file_index *
                                      _NUM_DIALS_PER_FILE]
-      with tf.io.gfile.GFile(json_file_path, 'w') as f:
+      with open(json_file_path, 'w', encoding='utf-8') as f:
+      # with tf.io.gfile.GFile(json_file_path, 'w') as f:
         json.dump(
             dialogs_list, f, indent=2, separators=(',', ': '), sort_keys=True)
       logging.info('Created %s with %d dialogues.', json_file_path,
