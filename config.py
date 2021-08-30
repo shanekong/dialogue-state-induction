@@ -79,7 +79,8 @@ class Config:
     threshold: float = 0.5
 
     def __post_init__(self):
-        self.nlp['server'] = 'utils/stanford-corenlp-full-2018-10-05'
+        # self.nlp['server'] = 'utils/stanford-corenlp-full-2018-10-05'
+        self.nlp['server'] = 'utils/stanford-corenlp-4.2.2'
         self.nlp['props'] = {}
         self.nlp['props']['annotators'] = 'tokenize, pos, ner, dcoref'
         self.nlp['props']['pipelineLanguage'] = 'en'
@@ -97,6 +98,8 @@ class Multiwoz21Config(Config):
     slot_num: int = 300
     input_data_dir: str = "data/multiwoz21"
     vocab_path: str = 'data/multiwoz21/voc.txt'
+    # input_data_dir: str = "multiwoz/data/multiwoz21"
+    # vocab_path: str = 'multiwoz/data/multiwoz21/voc.txt'
     save_dir: str = "save/multiwoz21"
     pretrain_model_path: str = "save/multiwoz21/pretrain_model.pkl"
     model_path: str = "save/multiwoz21/model.pkl"

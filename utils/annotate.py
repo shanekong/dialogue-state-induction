@@ -207,7 +207,13 @@ def read_annotation(annotation, base_index, stopwords, tokens, entities, postags
 def annotate(system_utterance, user_utterance, annotator):
     system_annotation = json.loads(annotator(system_utterance))
     system_annotation['corefs'] = fix_stanford_coref(system_annotation)
-    user_annotation = json.loads(annotator(user_utterance))
+    try:
+        user_annotation = json.loads(annotator(user_utterance))
+    except Exception as e:
+        print(user_utterance)
+        print(annotator(user_utterance))
+        print(e)
+        exit(-1)
     user_annotation['corefs'] = fix_stanford_coref(user_annotation)
     return system_annotation, user_annotation
 

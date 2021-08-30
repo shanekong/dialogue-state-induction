@@ -24,16 +24,16 @@ import re
 from absl import app
 from absl import flags
 from absl import logging
-import tensorflow as tf
+# import tensorflow as tf
 
 import schema
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string('input_data_dir', '',
+flags.DEFINE_string('input_data_dir', './data/MultiWOZ_2.1',
                     'Path of the dataset to convert from.')
 flags.DEFINE_string(
-    'output_dir', '',
+    'output_dir', './data/multiwoz21',
     'Path to output directory. If not specified, generate the dialogues in the '
     'same directory as the script.')
 flags.DEFINE_boolean(
